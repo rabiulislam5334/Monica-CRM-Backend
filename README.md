@@ -60,22 +60,24 @@ both create a `pg.Pool` wrapped in `PrismaPg`, and pass that adapter into
 
 ## Project Structure
 
+```
 src/
-app.js # Express app (routes, middleware)
-server.js # Entry point
-config/prisma.js # Prisma client (pg driver adapter, Supabase-ready)
-controllers/ # authController, contactController
-routes/ # authRoutes, contactRoutes
-middlewares/ # auth (JWT), errorHandler
-utils/response.js # consistent JSON response envelope
-validators/validators.js # zod schemas + validation middleware
+  app.js                     # Express app (routes, middleware)
+  server.js                  # Entry point
+  config/prisma.js           # Prisma client (pg driver adapter, Supabase-ready)
+  controllers/                # authController, contactController
+  routes/                     # authRoutes, contactRoutes
+  middlewares/                 # auth (JWT), errorHandler
+  utils/response.js           # consistent JSON response envelope
+  validators/validators.js    # zod schemas + validation middleware
 prisma/
-schema.prisma # User + Contact models
-migrations/ # SQL migration history
-seed.js # Default test data (Supabase-aware)
+  schema.prisma               # User + Contact models
+  migrations/                 # SQL migration history
+  seed.js                     # Default test data (Supabase-aware)
 tests/
-contact.test.js # Feature tests (mocked Prisma client)
-prisma.config.ts # Prisma CLI config (loads .env)
+  contact.test.js             # Feature tests (mocked Prisma client)
+prisma.config.ts              # Prisma CLI config (loads .env)
+```
 
 ## Setup Instructions
 
