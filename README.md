@@ -252,5 +252,5 @@ Not required by the assignment, but deploys cleanly as:
 
 ## Estimated Time Spent
 
-~5-7 hours (setup, schema/migrations, Supabase/SSL troubleshooting, auth,
+~8-12 hours (setup, schema/migrations, Supabase/SSL troubleshooting, auth,
 endpoints, search/filter/stats, tests, README).
