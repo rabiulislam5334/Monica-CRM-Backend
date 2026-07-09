@@ -1,34 +1,24 @@
+const jwt = require("jsonwebtoken");
 const { failure } = require("../utils/response");
 
-function notFound(req, res, next) {
-  return failure(res, {
-    message: `Route not found: ${req.method} ${req.originalUrl}`,
-    status: 404,
-  });
-}
+function authenticate(req, res, next) {
+  const header = req.headers.authorization || "";
+  const token = header.startsWith("Bearer ") ? header.slice(7) : null;
 
-function errorHandler(err, req, res, next) {
-  console.error(err);
-
-  if (err.code === "P2025") {
-    return failure(res, { message: "Resource not found", status: 404 });
-  }
-  if (err.code === "P2002") {
+  if (!token) {
     return failure(res, {
-      message: "Duplicate value violates a unique constraint",
-      status: 409,
+      message: "Authentication token missing",
+      status: 401,
     });
   }
 
-  const status = err.status || 500;
-  return failure(res, {
-    message: err.message || "Internal server error",
-    status,
-  });
+  try {
+    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = { id: payload.id, email: payload.email };
+    next();
+  } catch (err) {
+    return failure(res, { message: "Invalid or expired token", status: 401 });
+  }
 }
 
-function asyncHandler(fn) {
-  return (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);
-}
-
-module.exports = { notFound, errorHandler, asyncHandler };
+module.exports = { authenticate };
