@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+ 
 }
 
 model User {
@@ -37,5 +37,6 @@ model Contact {
 
   @@index([userId])
   @@index([userId, isFavorite])
+  @@index([userId, firstName])
   @@map("contacts")
 }
